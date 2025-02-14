@@ -38,49 +38,66 @@ const Register = () => {
   };
 
   return (
-    <div className="register-container">
-      <form className="register-form" onSubmit={handleRegister}>
-        <label htmlFor="name">Name:</label>
-        <input 
-          type="text" 
-          id="name" 
-          name="name" 
-          placeholder="Enter your name" 
-          required 
-          value={formData.name} 
-          onChange={handleChange}  // Update name in formData on change
-        />
-
-        <label htmlFor="email">Email:</label>
-        <input 
-          type="email" 
-          id="email" 
-          name="email" 
-          placeholder="Enter your email" 
-          required 
-          value={formData.email} 
-          onChange={handleChange}  // Update email in formData on change
-        />
-
-        <label htmlFor="password">Password:</label>
-        <input 
-          type="password" 
-          id="password" 
-          name="password" 
-          placeholder="Enter your password" 
-          required 
-          value={formData.password} 
-          onChange={handleChange}  // Update password in formData on change
-        />
-
-        <button type="submit" disabled={loading}>
-          {loading ? "Registering..." : "Register"}
-        </button>
-
-        <p className="register-text">
-          Already have an account? <Link to="/">Click here to login</Link>
+       <div className="register-container">
+      {/* Left Section with Image */}
+      <div className="register-image">
+        <img src={require("../Pictures/SWOT.png")} alt="Register" />
+        <p className="get-started-text">
+          Get started today and take the first step towards smarter business decisions.
         </p>
-      </form>
+      </div>
+
+      {/* Right Section with Form */}
+      <div className="register-content">
+        <form className="register-form" onSubmit={handleRegister}>
+          <div className="form-group">
+            <label htmlFor="name">Name:</label>
+            <input 
+              type="text" 
+              id="name" 
+              name="name" 
+              placeholder="Enter your name" 
+              required 
+              value={formData.name} 
+              onChange={handleChange} 
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="email">Email:</label>
+            <input 
+              type="email" 
+              id="email" 
+              name="email" 
+              placeholder="Enter your email" 
+              required 
+              value={formData.email} 
+              onChange={handleChange} 
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="password">Password:</label>
+            <input 
+              type="password" 
+              id="password" 
+              name="password" 
+              placeholder="Enter your password" 
+              required 
+              value={formData.password} 
+              onChange={handleChange} 
+            />
+          </div>
+
+          <button type="submit" className="register-btn" disabled={loading}>
+            {loading ? "Registering..." : "Register"}
+          </button>
+
+          <p className="register-text">
+            Already have an account? <Link to="/">Click here to login</Link>
+          </p>
+        </form>
+      </div>
     </div>
   );
 };

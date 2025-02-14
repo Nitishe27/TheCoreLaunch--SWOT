@@ -90,6 +90,7 @@
 
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios"; // Import Axios
 import "./Register.css";
 
 const Login = () => {
@@ -102,38 +103,27 @@ const Login = () => {
     e.preventDefault();
     console.log("User Login!");
 
-    const loginData = {
-      email: email,  // Send email along with password
-      password: password,
-    };
+    // Send email and password
+    const loginData = { email, password };
 
     try {
-      const response = await fetch("http://localhost:5000/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(loginData),  // Send login data as JSON
-        credentials: "include",  // Include credentials (cookies) in the request
-      });
+      const response = await axios.post("http://localhost:5000/login",loginData,{ withCredentials: true });  // Include credentials (cookies) in the request
 
-      const result = await response.json();
-
-      if (response.ok) {
-        console.log("Login successful:", result.message);
-        navigate("/home"); // Navigate to home page after successful login
-      } else {
-        console.log("Login failed:", result.error);
-        setError(result.error);  // Set error state for display
-      }
+      console.log("Login successful:", response.data.message);
+      navigate("/home"); // Navigate to home page after successful login
     } catch (error) {
       console.error("Error during login:", error);
-      setError("An error occurred, please try again.");  // Set generic error message
+      if (error.response) {
+        setError(error.response.data.error);  // Set error from server response
+      } else {
+        setError("An error occurred, please try again.");  // Set generic error message
+      }
     }
   };
 
   return (
     <div className="register-container">
+      
       <form className="register-form" onSubmit={handleLogin}>
         <label htmlFor="email">Email:</label>
         <input
@@ -158,7 +148,7 @@ const Login = () => {
         />
 
         <button type="submit">Login</button>
-        
+
         {error && <div className="error-message">{error}</div>}  {/* Display error message if login fails */}
 
         <p className="register-text">
@@ -170,5 +160,6 @@ const Login = () => {
 };
 
 export default Login;
+
 
 
